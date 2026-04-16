@@ -45,7 +45,7 @@
                         <div class="due-date">
                             <span class="label">Due:</span>
                             <time class="due-date-value" data-testid="test-todo-due-date"
-                                datetime="2026-04-15T18:00:00">April
+                                datetime="2026-04-22T18:00:00">April
                                 15, 2026</time>
                         </div>
                     </div>
@@ -79,14 +79,16 @@
                 <span class="priority-badge high" data-testid="test-todo-priority">High Priority</span>
             </div>
 
+            <!-- Due date & time remaining -->
             <div class="due-info">
-    <div class="time-remaining" data-testid="test-todo-time-remaining" aria-live="polite">
-        Calculating...
-    </div>
-    <div class="overdue-indicator" data-testid="test-todo-overdue-indicator" style="display: none; color: red; font-weight: bold;">
-        ⚠️ OVERDUE!
-    </div>
-</div>
+                <div class="time-remaining" data-testid="test-todo-time-remaining" aria-live="polite">
+                    Calculating...
+                </div>
+                <div class="overdue-indicator" data-testid="test-todo-overdue-indicator"
+                    style="display: none; color: red; font-weight: bold;">
+                    ⚠️ OVERDUE!
+                </div>
+            </div>
 
             <!-- Complete toggle -->
             <div class="complete-section">

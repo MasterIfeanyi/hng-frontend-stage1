@@ -7,8 +7,8 @@ const statusBadge = document.querySelector('[data-testid="test-todo-status"]');
 const todoTitle = document.querySelector('.todo-title');
 const timeRemainingElement = document.querySelector('[data-testid="test-todo-time-remaining"]');
 
-// Set the due date (April 15, 2026 at 6:00 PM)
-const dueDate = new Date(2026, 3, 15, 18, 0, 0); // Month is 0-indexed, so 3 = April
+// Set the due date (April 22, 2026 at 6:00 PM)
+const dueDate = new Date(2026, 3, 22, 18, 0, 0); // Month is 0-indexed, so 3 = April
 
 
 
