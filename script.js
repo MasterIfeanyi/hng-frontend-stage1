@@ -11,6 +11,18 @@ const timeRemainingElement = document.querySelector('[data-testid="test-todo-tim
 const dueDate = new Date(2026, 3, 22, 18, 0, 0); // Month is 0-indexed, so 3 = April
 
 
+// Set initial priority dot color when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    const priorityBadge = document.querySelector('[data-testid="test-todo-priority"]');
+    const priorityDot = document.querySelector('[data-testid="test-todo-priority-indicator"]');
+    
+    if (priorityBadge && priorityDot) {
+        // Get the priority from the badge text (e.g., "High Priority" → "High")
+        const priorityText = priorityBadge.textContent.replace(' Priority', '').trim();
+        priorityDot.setAttribute('data-priority', priorityText);
+    }
+});
+
 
 // Function to calculate and update time remaining
 function updateTimeRemaining() {
