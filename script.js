@@ -308,22 +308,27 @@ function checkDescriptionLength() {
 }
 
 function toggleDescription() {
-    const collapsibleSection = document.querySelector('[data-testid="test-todo-collapsible-section"]');
+    const shortSection = document.querySelector('[data-testid="test-todo-description-short"]');
+    const fullSection = document.querySelector('[data-testid="test-todo-collapsible-section"]');
     const expandBtn = document.querySelector('[data-testid="test-todo-expand-toggle"]');
     const isExpanded = expandBtn.getAttribute('aria-expanded') === 'true';
 
     if (isExpanded) {
-        collapsibleSection.style.display = 'none';
+        // Collapse: show short, hide full
+        shortSection.style.display = 'block';
+        fullSection.style.display = 'none';
         expandBtn.setAttribute('aria-expanded', 'false');
         expandBtn.textContent = 'Show More 🔽';
     } else {
-        collapsibleSection.style.display = 'block';
+        // Expand: hide short, show full
+        shortSection.style.display = 'none';
+        fullSection.style.display = 'block';
         expandBtn.setAttribute('aria-expanded', 'true');
         expandBtn.textContent = 'Show Less 🔼';
     }
 }
 
-// Add event listener (put this with your other event listeners)
+// Add event listener
 const expandBtn = document.querySelector('[data-testid="test-todo-expand-toggle"]');
 if (expandBtn) {
     expandBtn.addEventListener('click', toggleDescription);
