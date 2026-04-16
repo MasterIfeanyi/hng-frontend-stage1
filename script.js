@@ -254,6 +254,17 @@ function handleSave() {
     // Update priority (add "Priority" word back if your display shows it)
     document.querySelector('[data-testid="test-todo-priority"]').textContent = newPriority + ' Priority';
 
+
+    // Define priorityBadge variable FIRST
+    const priorityBadge = document.querySelector('[data-testid="test-todo-priority"]');
+    priorityBadge.textContent = newPriority + ' Priority';
+
+
+    // Remove all priority classes first
+    priorityBadge.classList.remove('high', 'medium', 'low');
+    // Add the new priority class (lowercase)
+    priorityBadge.classList.add(newPriority.toLowerCase());
+
     // update priority dot
     const priorityDot = document.querySelector('[data-testid="test-todo-priority-indicator"]');
     if (priorityDot) {
