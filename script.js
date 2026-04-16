@@ -126,14 +126,30 @@ function updateTimeRemaining() {
     }
 }
 
+
 // Handle checkbox toggle (completion)
 function handleCompleteToggle() {
+    const statusSelect = document.querySelector('[data-testid="test-todo-status-control"]');
+    
     if (checkbox.checked) {
         // Task is completed
         todoCard.classList.add('completed');
         statusBadge.textContent = '✅ Done';
         statusBadge.style.backgroundColor = '#006747';
         statusBadge.style.color = 'white';
+
+        // Remove any status-related styling
+        todoCard.style.borderLeft = 'none';  // Removes "In Progress" orange border
+        todoCard.style.backgroundColor = '#e8f5e9';  // Green for Done
+        
+        // Add strikethrough
+        todoTitle.style.textDecoration = 'line-through';
+        todoTitle.style.opacity = '0.7';
+        
+        // Sync dropdown
+        if (statusSelect) {
+            statusSelect.value = 'Done';
+        }
 
         // Add celebratory animation
         todoCard.style.transform = 'scale(1.02)';
@@ -146,6 +162,17 @@ function handleCompleteToggle() {
         statusBadge.textContent = 'Pending';
         statusBadge.style.backgroundColor = 'var(--status)';
         statusBadge.style.color = 'var(--black)';
+        
+        // Remove done styling
+        todoCard.style.borderLeft = 'none';
+        todoCard.style.backgroundColor = '';  // Reset to default
+        todoTitle.style.textDecoration = 'none';
+        todoTitle.style.opacity = '1';
+        
+        // Sync dropdown
+        if (statusSelect) {
+            statusSelect.value = 'Pending';
+        }
     }
 }
 
