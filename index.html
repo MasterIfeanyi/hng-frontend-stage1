@@ -32,27 +32,48 @@
 
 
                     <div class="card-info">
-                        <span class="status-badge" data-testid="test-todo-status">
-                            Pending
-                        </span>
+
+
+                        <div data-testid="test-todo-status">
+                            <select data-testid="test-todo-status-control">
+                                <option value="Pending">Pending</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Done">Done</option>
+                            </select>
+                        </div>
+
                         <div class="due-date">
                             <span class="label">Due:</span>
-                            <time class="due-date-value" data-testid="test-todo-due-date"
-                                datetime="2026-04-15T18:00:00">April
-                                15, 2026</time>
+                            <time class="due-date-value" data-testid="test-todo-due-date" datetime=""></time>
                         </div>
                     </div>
 
                 </div>
             </div>
 
-            <!-- Description -->
-            <p class="todo-description" data-testid="test-todo-description">
-                Review the Q2 project proposal and provide feedback to the team by end of day.
-            </p>
+            <!-- Description with expand/collapse -->
+            <div class="description-container">
+                <div class="description-short" data-testid="test-todo-description-short">
+                    Review the Q2 project proposal and provide feedback to the team by end of day.
+                </div>
+
+                <div class="description-full" data-testid="test-todo-collapsible-section" style="display: none;">
+                    <p data-testid="test-todo-description">
+                        Review the Q2 project proposal and provide feedback to the team by end of day.
+                        Make sure to include budget considerations, timeline adjustments, and resource allocation.
+                        Schedule a meeting with stakeholders by Friday.
+                    </p>
+                </div>
+
+                <button class="expand-toggle" data-testid="test-todo-expand-toggle" aria-expanded="false"
+                    aria-controls="collapsible-section" style="display: none;">
+                    Show More 🔽
+                </button>
+            </div>
 
             <!-- Priority badge -->
             <div class="priority-wrapper">
+                <span class="priority-dot" data-testid="test-todo-priority-indicator"></span>
                 <span class="priority-badge high" data-testid="test-todo-priority">High Priority</span>
             </div>
 
@@ -60,6 +81,10 @@
             <div class="due-info">
                 <div class="time-remaining" data-testid="test-todo-time-remaining" aria-live="polite">
                     Calculating...
+                </div>
+                <div class="overdue-indicator" data-testid="test-todo-overdue-indicator"
+                    style="display: none; color: red; font-weight: bold;">
+                    ⚠️ OVERDUE!
                 </div>
             </div>
 
