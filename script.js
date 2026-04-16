@@ -16,43 +16,77 @@ const dueDate = new Date(2026, 3, 15, 18, 0, 0); // Month is 0-indexed, so 3 = A
 function updateTimeRemaining() {
     const now = new Date();
     const timeDiff = dueDate - now;
-
+    
+    const overdueIndicator = document.querySelector('[data-testid="test-todo-overdue-indicator"]');
+    const statusBadge = document.querySelector('[data-testid="test-todo-status"]');
+    
     let message = '';
-
+    let isOverdue = false;
+    
+    // Check if task is Done - if yes, stop updating
+    if (statusBadge && statusBadge.textContent === 'Done') {
+        if (timeRemainingElement) {
+            timeRemainingElement.textContent = '✓ Completed';
+        }
+        if (overdueIndicator) {
+            overdueIndicator.style.display = 'none';
+        }
+        return;
+    }
+    
     if (timeDiff <= 0) {
         // Overdue
+        isOverdue = true;
         const overdueMs = Math.abs(timeDiff);
         const overdueHours = Math.floor(overdueMs / (1000 * 60 * 60));
         const overdueDays = Math.floor(overdueHours / 24);
-
+        
         if (overdueDays > 0) {
-            message = `Overdue by ${overdueDays} day${overdueDays > 1 ? 's' : ''}`;
+            message = `⏰ Overdue by ${overdueDays} day${overdueDays > 1 ? 's' : ''}`;
         } else if (overdueHours > 0) {
-            message = `Overdue by ${overdueHours} hour${overdueHours > 1 ? 's' : ''}`;
+            message = `⏰ Overdue by ${overdueHours} hour${overdueHours > 1 ? 's' : ''}`;
         } else {
-            message = `Overdue now!`;
+            const overdueMinutes = Math.floor(overdueMs / (1000 * 60));
+            message = `⏰ Overdue by ${overdueMinutes} minute${overdueMinutes > 1 ? 's' : ''}`;
         }
     } else {
         // Not overdue yet
         const hoursLeft = Math.floor(timeDiff / (1000 * 60 * 60));
         const daysLeft = Math.floor(hoursLeft / 24);
-
+        
         if (daysLeft > 0) {
             message = `📅 Due in ${daysLeft} day${daysLeft > 1 ? 's' : ''}`;
         } else if (hoursLeft > 0) {
-            message = `Due in ${hoursLeft} hour${hoursLeft > 1 ? 's' : ''}`;
+            message = `⏱️ Due in ${hoursLeft} hour${hoursLeft > 1 ? 's' : ''}`;
         } else {
             const minutesLeft = Math.floor(timeDiff / (1000 * 60));
             if (minutesLeft > 0) {
-                message = ` Due in ${minutesLeft} minute${minutesLeft > 1 ? 's' : ''}!`;
+                message = `⏱️ Due in ${minutesLeft} minute${minutesLeft > 1 ? 's' : ''}`;
             } else {
-                message = ` Due now!`;
+                message = `⏰ Due very soon!`;
             }
         }
     }
-
+    
+    // Update the time remaining display
     if (timeRemainingElement) {
         timeRemainingElement.textContent = message;
+    }
+    
+    // Show/hide overdue indicator and add visual styling
+    if (overdueIndicator) {
+        if (isOverdue) {
+            overdueIndicator.style.display = 'inline-block';
+            // Add red accent to the card
+            todoCard.style.borderRight = '3px solid #f44336';
+            todoCard.style.backgroundColor = '#ffebee';
+        } else {
+            overdueIndicator.style.display = 'none';
+            // Remove red accent if not overdue
+            if (todoCard.style.borderRight === '3px solid #f44336') {
+                todoCard.style.borderRight = '';
+            }
+        }
     }
 }
 

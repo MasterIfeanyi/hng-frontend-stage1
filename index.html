@@ -79,12 +79,14 @@
                 <span class="priority-badge high" data-testid="test-todo-priority">High Priority</span>
             </div>
 
-            <!-- Due date & time remaining -->
             <div class="due-info">
-                <div class="time-remaining" data-testid="test-todo-time-remaining" aria-live="polite">
-                    Calculating...
-                </div>
-            </div>
+    <div class="time-remaining" data-testid="test-todo-time-remaining" aria-live="polite">
+        Calculating...
+    </div>
+    <div class="overdue-indicator" data-testid="test-todo-overdue-indicator" style="display: none; color: red; font-weight: bold;">
+        ⚠️ OVERDUE!
+    </div>
+</div>
 
             <!-- Complete toggle -->
             <div class="complete-section">
