@@ -79,17 +79,58 @@ function handleCompleteToggle() {
 
 // Handle Edit button
 function handleEdit() {
-    const newTitle = prompt('Edit task title:', todoTitle.textContent);
-    if (newTitle && newTitle.trim()) {
-        todoTitle.textContent = newTitle.trim();
-        
-        // Show a temporary success message
-        const editBtn = document.querySelector('[data-testid="test-todo-edit-button"]');
-        const originalText = editBtn.textContent;
-        editBtn.textContent = '✅ Saved!';
-        setTimeout(() => {
-            editBtn.textContent = originalText;
-        }, 1500);
+    // Get the edit form and normal view
+    const editForm = document.querySelector('[data-testid="test-todo-edit-form"]');
+    const todoCard = document.querySelector('.todo-card');
+    
+    // Get current values to fill the form
+    const currentTitle = document.querySelector('[data-testid="test-todo-title"]').textContent;
+    const currentDesc = document.querySelector('[data-testid="test-todo-description"]').textContent;
+    const currentPriority = document.querySelector('[data-testid="test-todo-priority"]').textContent;
+    const currentDueDate = document.querySelector('[data-testid="test-todo-due-date"]').getAttribute('datetime');
+
+    // Fill the edit form with current values
+    document.querySelector('[data-testid="test-todo-edit-title-input"]').value = currentTitle;
+    document.querySelector('[data-testid="test-todo-edit-description-input"]').value = currentDesc;
+    
+    // Set priority dropdown (remove "Priority" word if present)
+    let priorityValue = currentPriority.replace(' Priority', '');
+    document.querySelector('[data-testid="test-todo-edit-priority-select"]').value = priorityValue;
+    
+    // Set due date (convert from "April 15, 2026" to YYYY-MM-DD)
+    const dueDateElement = document.querySelector('[data-testid="test-todo-due-date"]');
+    const dueDateText = dueDateElement.textContent;
+    // Simple conversion - you might need to adjust this
+    const dateObj = new Date(dueDateText);
+    const formattedDate = dateObj.toISOString().split('T')[0];
+    document.querySelector('[data-testid="test-todo-edit-due-date-input"]').value = formattedDate;
+    
+    // HIDE all normal content
+    const children = todoCard.children;
+    for(let child of children) {
+        if(child !== editForm) {
+            child.style.display = 'none';
+        }
+    }
+    
+    // SHOW the edit form
+    editForm.style.display = 'block';
+}
+
+// Handle Cancel button
+function handleCancel() {
+    const editForm = document.querySelector('[data-testid="test-todo-edit-form"]');
+    const todoCard = document.querySelector('.todo-card');
+    
+    // HIDE the edit form
+    editForm.style.display = 'none';
+    
+    // SHOW all normal content back
+    const children = todoCard.children;
+    for(let child of children) {
+        if(child !== editForm) {
+            child.style.display = '';  // Empty string restores default display
+        }
     }
 }
 
@@ -143,6 +184,11 @@ if (editBtn) {
 const deleteBtn = document.querySelector('[data-testid="test-todo-delete-button"]');
 if (deleteBtn) {
     deleteBtn.addEventListener('click', handleDelete);
+}
+
+const cancelBtn = document.querySelector('[data-testid="test-todo-cancel-button"]');
+if (cancelBtn) {
+    cancelBtn.addEventListener('click', handleCancel);
 }
 
 // Initialize time remaining and update every 60 seconds

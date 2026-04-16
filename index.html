@@ -24,7 +24,7 @@
                         <div class="tags-section">
                             <ul class="tags-list" role="list" data-testid="test-todo-tags">
                                 <li data-testid="test-todo-tag-work" class="tag">Work</li>
-                                <li class="tag" data-testid="test-todo-tag-important" >Important</li>
+                                <li class="tag" data-testid="test-todo-tag-important">Important</li>
                                 <li data-testid="test-todo-tag-urgent" class="tag urgent-tag">Urgent</li>
                             </ul>
                         </div>
@@ -79,6 +79,32 @@
                 <button class="delete-btn" data-testid="test-todo-delete-button" aria-label="Delete task">
                     Delete
                 </button>
+            </div>
+
+            <!-- Edit Form (Hidden by default) -->
+            <div class="edit-form" data-testid="test-todo-edit-form" style="display: none;">
+                <h3>Edit Task</h3>
+
+                <label for="edit-title-input">Title:</label>
+                <input type="text" id="edit-title-input" data-testid="test-todo-edit-title-input">
+
+                <label for="edit-desc-input">Description:</label>
+                <textarea id="edit-desc-input" data-testid="test-todo-edit-description-input"></textarea>
+
+                <label for="edit-priority-select">Priority:</label>
+                <select id="edit-priority-select" data-testid="test-todo-edit-priority-select">
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+
+                <label for="edit-due-date">Due Date:</label>
+                <input type="date" id="edit-due-date" data-testid="test-todo-edit-due-date-input">
+
+                <div class="edit-buttons">
+                    <button data-testid="test-todo-save-button">Save</button>
+                    <button data-testid="test-todo-cancel-button">Cancel</button>
+                </div>
             </div>
         </article>
     </div>
