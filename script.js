@@ -11,6 +11,30 @@ const timeRemainingElement = document.querySelector('[data-testid="test-todo-tim
 const dueDate = new Date(2026, 3, 22, 18, 0, 0); // Month is 0-indexed, so 3 = April
 
 
+// Initialize the due date display on page load
+function initializeDueDate() {
+    const dueDateElement = document.querySelector('[data-testid="test-todo-due-date"]');
+    
+    if (dueDateElement) {
+        // Format the date as "April 22, 2026"
+        const formattedDate = dueDate.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        
+        // Update the display text
+        dueDateElement.textContent = formattedDate;
+        
+        // Update the datetime attribute (format: YYYY-MM-DD)
+        const datetimeValue = dueDate.toISOString().split('T')[0];
+        dueDateElement.setAttribute('datetime', datetimeValue);
+    }
+}
+
+// Call this function immediately
+initializeDueDate();
+
 // Set initial priority dot color when page loads
 document.addEventListener('DOMContentLoaded', function() {
     const priorityBadge = document.querySelector('[data-testid="test-todo-priority"]');
@@ -259,7 +283,6 @@ function handleEdit() {
     const currentTitle = document.querySelector('[data-testid="test-todo-title"]').textContent;
     const currentDesc = document.querySelector('[data-testid="test-todo-description"]').textContent;
     const currentPriority = document.querySelector('[data-testid="test-todo-priority"]').textContent;
-    const currentDueDate = document.querySelector('[data-testid="test-todo-due-date"]').getAttribute('datetime');
 
     // Fill the edit form with current values
     document.querySelector('[data-testid="test-todo-edit-title-input"]').value = currentTitle;
@@ -272,7 +295,6 @@ function handleEdit() {
     // Set due date (convert from "April 15, 2026" to YYYY-MM-DD)
     const dueDateElement = document.querySelector('[data-testid="test-todo-due-date"]');
     const dueDateText = dueDateElement.textContent;
-    // Simple conversion - you might need to adjust this
     const dateObj = new Date(dueDateText);
     const formattedDate = dateObj.toISOString().split('T')[0];
     document.querySelector('[data-testid="test-todo-edit-due-date-input"]').value = formattedDate;
