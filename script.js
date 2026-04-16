@@ -77,6 +77,123 @@ function handleCompleteToggle() {
     }
 }
 
+
+// Status Control functionality
+function handleStatusChange() {
+    const statusSelect = document.querySelector('[data-testid="test-todo-status-control"]');
+    const statusBadge = document.querySelector('[data-testid="test-todo-status"]');
+    const checkbox = document.querySelector('[data-testid="test-todo-complete-toggle"]');
+    const todoCard = document.querySelector('.todo-card');
+    const todoTitle = document.querySelector('[data-testid="test-todo-title"]');
+    
+    const newStatus = statusSelect.value;
+    
+    // Update status badge
+    statusBadge.textContent = newStatus;
+    
+    // Sync checkbox
+    if (newStatus === 'Done') {
+        checkbox.checked = true;
+        // Add done styling
+        todoCard.classList.add('completed');
+        todoTitle.style.textDecoration = 'line-through';
+        todoTitle.style.opacity = '0.7';
+    } else {
+        checkbox.checked = false;
+        todoCard.classList.remove('completed');
+        todoTitle.style.textDecoration = 'none';
+        todoTitle.style.opacity = '1';
+    }
+
+    // Change styling based on status
+    if (newStatus === 'In Progress') {
+        todoCard.style.borderLeft = '4px solid #ff9800';
+        todoCard.style.backgroundColor = '#fff8e1';
+    } else if (newStatus === 'Pending') {
+        todoCard.style.borderLeft = 'none';
+        todoCard.style.backgroundColor = '';
+    } else if (newStatus === 'Done') {
+        todoCard.style.backgroundColor = '#e8f5e9';
+    }
+}
+
+// Sync checkbox back to status dropdown
+function handleCheckboxSync() {
+    const statusSelect = document.querySelector('[data-testid="test-todo-status-control"]');
+    const checkbox = document.querySelector('[data-testid="test-todo-complete-toggle"]');
+    
+    if (checkbox.checked) {
+        statusSelect.value = 'Done';
+        // Trigger the status change manually
+        const event = new Event('change');
+        statusSelect.dispatchEvent(event);
+    } else {
+        // Only change if it's currently Done
+        if (statusSelect.value === 'Done') {
+            statusSelect.value = 'Pending';
+            const event = new Event('change');
+            statusSelect.dispatchEvent(event);
+        }
+    }
+}
+
+// Handle Save button
+function handleSave() {
+    // 1. Get all the new values from edit form
+    const newTitle = document.querySelector('[data-testid="test-todo-edit-title-input"]').value;
+    const newDescription = document.querySelector('[data-testid="test-todo-edit-description-input"]').value;
+    const newPriority = document.querySelector('[data-testid="test-todo-edit-priority-select"]').value;
+    const newDueDate = document.querySelector('[data-testid="test-todo-edit-due-date-input"]').value;
+    
+    // 2. Update the display with new values
+    // Update title
+    document.querySelector('[data-testid="test-todo-title"]').textContent = newTitle;
+    
+    // Update description
+    document.querySelector('[data-testid="test-todo-description"]').textContent = newDescription;
+    
+    // Update priority (add "Priority" word back if your display shows it)
+    document.querySelector('[data-testid="test-todo-priority"]').textContent = newPriority + ' Priority';
+    
+    // Update due date (convert from YYYY-MM-DD to readable format)
+    const dueDateObj = new Date(newDueDate);
+    const formattedDate = dueDateObj.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+    const dueDateElement = document.querySelector('[data-testid="test-todo-due-date"]');
+    dueDateElement.textContent = formattedDate;
+    dueDateElement.setAttribute('datetime', newDueDate);
+    
+    // 3. Hide edit form and show normal view
+    const editForm = document.querySelector('[data-testid="test-todo-edit-form"]');
+    const todoCard = document.querySelector('.todo-card');
+    
+    editForm.style.display = 'none';
+    
+    const children = todoCard.children;
+    for(let child of children) {
+        if(child !== editForm) {
+            child.style.display = '';
+        }
+    }
+    
+    // 4. Update time remaining (bonus!)
+    if (typeof updateTimeRemaining === 'function') {
+        // Update your due date variable if you have one
+        // Then call updateTimeRemaining()
+    }
+    
+    // 5. Show success feedback (optional)
+    const saveBtn = document.querySelector('[data-testid="test-todo-save-button"]');
+    const originalText = saveBtn.textContent;
+    saveBtn.textContent = '✅ Saved!';
+    setTimeout(() => {
+        saveBtn.textContent = originalText;
+    }, 1000);
+}
+
 // Handle Edit button
 function handleEdit() {
     // Get the edit form and normal view
@@ -189,6 +306,21 @@ if (deleteBtn) {
 const cancelBtn = document.querySelector('[data-testid="test-todo-cancel-button"]');
 if (cancelBtn) {
     cancelBtn.addEventListener('click', handleCancel);
+}
+
+const saveBtn = document.querySelector('[data-testid="test-todo-save-button"]');
+if (saveBtn) {
+    saveBtn.addEventListener('click', handleSave);
+}
+
+const statusSelect = document.querySelector('[data-testid="test-todo-status-control"]');
+if (statusSelect) {
+    statusSelect.addEventListener('change', handleStatusChange);
+}
+
+const currentStatus = statusBadge.textContent.trim();
+if (statusSelect) {
+    statusSelect.value = currentStatus;
 }
 
 // Initialize time remaining and update every 60 seconds

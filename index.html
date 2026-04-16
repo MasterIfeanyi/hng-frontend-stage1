@@ -32,9 +32,16 @@
 
 
                     <div class="card-info">
-                        <span class="status-badge" data-testid="test-todo-status">
-                            Pending
-                        </span>
+
+                        
+                        <div data-testid="test-todo-status">
+                            <select data-testid="test-todo-status-control">
+                                <option value="Pending">Pending</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Done">Done</option>
+                            </select>
+                        </div>
+
                         <div class="due-date">
                             <span class="label">Due:</span>
                             <time class="due-date-value" data-testid="test-todo-due-date"
