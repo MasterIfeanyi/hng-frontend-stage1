@@ -291,3 +291,42 @@ button:focus-visible,
 [data-testid="test-todo-card"]:focus-within {
     box-shadow: 0 4px 20px rgba(0, 103, 71, 0.15);
 }
+
+.priority-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.priority-dot[data-priority="Low"] {
+    background-color: #4caf50;
+}
+
+.priority-dot[data-priority="Medium"] {
+    background-color: #ff9800;
+}
+
+.priority-dot[data-priority="High"] {
+    background-color: #f44336;
+    box-shadow: 0 0 4px #f44336;
+}
+
+.description-container {
+    margin: 12px 0;
+}
+
+.expand-toggle {
+    background: none;
+    border: none;
+    color: #0066cc;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px 0;
+    margin-top: 4px;
+}
+
+.expand-toggle:hover {
+    text-decoration: underline;
+}
