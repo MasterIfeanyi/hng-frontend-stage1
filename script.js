@@ -8,7 +8,7 @@ const todoTitle = document.querySelector('.todo-title');
 const timeRemainingElement = document.querySelector('[data-testid="test-todo-time-remaining"]');
 
 // Set the due date (April 22, 2026 at 6:00 PM)
-const dueDate = new Date(2026, 3, 22, 18, 0, 0); // Month is 0-indexed, so 3 = April
+let dueDate = new Date(2026, 3, 22, 18, 0, 0); // Month is 0-indexed, so 3 = April
 
 
 // Initialize the due date display on page load
@@ -277,6 +277,11 @@ function handleSave() {
     const dueDateElement = document.querySelector('[data-testid="test-todo-due-date"]');
     dueDateElement.textContent = formattedDate;
     dueDateElement.setAttribute('datetime', newDueDate);
+
+    // Update the global dueDate variable
+    dueDate = new Date(newDueDate);
+    // Recalculate time remaining with new date
+    updateTimeRemaining();
 
     // 3. Hide edit form and show normal view
     const editForm = document.querySelector('[data-testid="test-todo-edit-form"]');
