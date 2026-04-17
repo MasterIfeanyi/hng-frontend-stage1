@@ -245,7 +245,20 @@ function handleSave() {
     document.querySelector('[data-testid="test-todo-description"]').textContent = newDescription;
 
     // Update priority (add "Priority" word back if your display shows it)
-    document.querySelector('[data-testid="test-todo-priority"]').textContent = newPriority + ' Priority';
+    const priorityBadge = document.querySelector('[data-testid="test-todo-priority"]');
+    priorityBadge.textContent = newPriority + ' Priority';
+    
+    // Remove existing priority classes
+    priorityBadge.classList.remove('high', 'medium', 'low');
+    
+    // Add the appropriate class based on priority
+    if (newPriority === 'High') {
+        priorityBadge.classList.add('high');
+    } else if (newPriority === 'Medium') {
+        priorityBadge.classList.add('medium');
+    } else if (newPriority === 'Low') {
+        priorityBadge.classList.add('low');
+    }
 
     // update priority dot
     const priorityDot = document.querySelector('[data-testid="test-todo-priority-indicator"]');

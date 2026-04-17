@@ -511,3 +511,31 @@ button:focus-visible,
     }
 }
 
+/* Priority badge color variations */
+.priority-badge.high {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.priority-badge.medium {
+    background-color: #fff3e0;
+    color: #e65100;
+}
+
+.priority-badge.low {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+/* Priority dot color variations */
+[data-priority="High"] {
+    background-color: #c62828;
+}
+
+[data-priority="Medium"] {
+    background-color: #e65100;
+}
+
+[data-priority="Low"] {
+    background-color: #2e7d32;
+}
