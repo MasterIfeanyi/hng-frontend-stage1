@@ -128,15 +128,18 @@ function updateTimeRemaining() {
 
 
 // Handle checkbox toggle (completion)
+// Replace the handleCompleteToggle function with this updated version:
 function handleCompleteToggle() {
     const statusSelect = document.querySelector('[data-testid="test-todo-status-control"]');
     
     if (checkbox.checked) {
         // Task is completed
         todoCard.classList.add('completed');
-        statusBadge.textContent = '✅ Done';
-        statusBadge.style.backgroundColor = '#006747';
-        statusBadge.style.color = 'white';
+        
+        // Update the dropdown value instead of replacing the badge
+        if (statusSelect) {
+            statusSelect.value = 'Done';
+        }
 
         // Remove any status-related styling
         todoCard.style.borderLeft = 'none';  // Removes "In Progress" orange border
@@ -145,11 +148,6 @@ function handleCompleteToggle() {
         // Add strikethrough
         todoTitle.style.textDecoration = 'line-through';
         todoTitle.style.opacity = '0.7';
-        
-        // Sync dropdown
-        if (statusSelect) {
-            statusSelect.value = 'Done';
-        }
 
         // Add celebratory animation
         todoCard.style.transform = 'scale(1.02)';
@@ -159,36 +157,29 @@ function handleCompleteToggle() {
     } else {
         // Task is not completed
         todoCard.classList.remove('completed');
-        statusBadge.textContent = 'Pending';
-        statusBadge.style.backgroundColor = 'var(--status)';
-        statusBadge.style.color = 'var(--black)';
+        
+        // Update the dropdown value
+        if (statusSelect) {
+            statusSelect.value = 'Pending';
+        }
         
         // Remove done styling
         todoCard.style.borderLeft = 'none';
         todoCard.style.backgroundColor = '';  // Reset to default
         todoTitle.style.textDecoration = 'none';
         todoTitle.style.opacity = '1';
-        
-        // Sync dropdown
-        if (statusSelect) {
-            statusSelect.value = 'Pending';
-        }
     }
 }
 
-
+// Also update the handleStatusChange function:
 // Status Control functionality
 function handleStatusChange() {
     const statusSelect = document.querySelector('[data-testid="test-todo-status-control"]');
-    const statusBadge = document.querySelector('[data-testid="test-todo-status"]');
     const checkbox = document.querySelector('[data-testid="test-todo-complete-toggle"]');
     const todoCard = document.querySelector('.todo-card');
     const todoTitle = document.querySelector('[data-testid="test-todo-title"]');
 
     const newStatus = statusSelect.value;
-
-    // Update status badge
-    statusBadge.textContent = newStatus;
 
     // Sync checkbox
     if (newStatus === 'Done') {
@@ -213,8 +204,10 @@ function handleStatusChange() {
         todoCard.style.backgroundColor = '';
     } else if (newStatus === 'Done') {
         todoCard.style.backgroundColor = '#e8f5e9';
+        todoCard.style.borderLeft = 'none';
     }
 }
+
 
 // Sync checkbox back to status dropdown
 function handleCheckboxSync() {
